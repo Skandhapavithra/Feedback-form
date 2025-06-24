@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feedback Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="html2pdf.bundle.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+  <div id="form-border">
+<div id="form-content">
+  <div id="print-view" class="print-only">
+<div class="responsive-table-wrapper">
+  <table class="header-table">
+  <form id="feedbackForm">
+    <tr>
+  <td colspan="1" class="green-text" style="font-size: 14px;"><b>TEAL</b></td>
+  <td colspan="5" class="green-text" style="font-size: 16px;"><b>PLANT MAINTENANCE</b></td>
+  <td class="blue-text" style="font-size: 13px;"><b>SUBMITTED ON<span class="mandatory">*</span></b></td>
+  <td><input type="date" name="submitted_on" id="submitted_on" style="width: 100%;"></td>
+</tr>
+
+<tr></tr> <!-- Empty row for alignment --> 
+
+<tr>
+  <td rowspan="2" colspan="1" class="blue-text" style="font-size: 13px;"><b>MUDUGANAPALLI</b></td>
+  <td rowspan="2" colspan="5" class="blue-text" style="font-size: 13px;">
+    <b>INTERNAL CUSTOMER SATISFACTION FEEDBACK TOWARDS DEVELOPMENT / PLANNED/BREAKDOWN SERVICE</b>
+  </td>
+  <td class="blue-text" style="font-size: 13px;"><b>RETURNED ON<span class="mandatory">*</span></b></td>
+  <td><input type="date" name="returned_on" id="returned_on" style="width: 100%;"></td>
+</tr>
+
+<tr>
+  <td class="blue-text" style="font-size: 13px;"><b>SUBMITTED BY<span class="mandatory">*</span></b></td>
+  <td><input type="text" name="submitted_by" id="submitted_by" placeholder="Enter submitted by" class="fixed-input" style="width: 95%;"></td>
+</tr>
+
+
+    <!-- Concern Dept and Concern Name row -->
+   <tr style="vertical-align: top;">
+  <!-- CONCERN DEPT -->
+  <td style="min-height: 50px;">
+    <b><span class="signature-label" style="font-size: 13px; color: green;">
+      CONCERN DEPT<span class="mandatory">*</span>
+    </span></b>
+  </td>
+  <td colspan="2" style="min-height: 50px;">
+    <input type="text" name="concern_dept" id="concern_dept"
+           placeholder="Enter Concern dept"
+           class="fixed-input"
+           style="width: 95%;height: 25px;">
+  </td>
+
+  <!-- CONCERN NAME -->
+  <td style="min-height: 50px;">
+    <b><span class="signature-label" style="font-size: 13px; color: green;">
+      CONCERN NAME<span class="mandatory">*</span>
+    </span></b>
+  </td>
+  <td colspan="2" style="min-height: 50px;">
+    <input type="text" name="concern_name" id="concern_name"
+           placeholder="Enter Concern name"
+           class="fixed-input"
+           style="width: 95%; height: 25px;">
+        
+  </td>
+
+  <!-- SIGNATURE -->
+  <td style="min-height: 50px;">
+    <b><span class="signature-label" style="font-size: 13px; color: green;">
+      SIGNATURE<span class="mandatory">*</span>
+    </span></b>
+  </td>
+  <td style="text-align: center; vertical-align: centre;">
+  <!-- Click-to-Sign Button -->
+  <div id="signatureInput"
+       style="
+         width: 80%;
+         height: 40px;
+         cursor: pointer;
+         border: 1px solid black;
+         background-color: #f2f2f2;
+         text-align: center;
+         line-height: 40px;
+         font-weight: bold;
+       ">
+    Click to Sign
+  </div>
+
+    <!-- Signature Image Preview Area -->
+    <div id="signaturePreview" style="
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;">
+</div>
+
+  </td>
+</tr>
+
+
+    <!-- Work Description row -->
+ <tr>
+  <td class="blue-text" style="font-size: 14px;"><b>WORK DESCRIPTION<span class="mandatory">*</span></b></td>
+  <td colspan="9">
+    <input type="text" name="work_description" id="work_description"
+           placeholder="Enter work details"
+           class="work-description"
+           style="width: 98%; font-size: 14px; padding: 6px;">
+  </td>
+</tr>
+
+    <!-- Qualitative Message row -->
+    <tr>
+  <td colspan="9" class="qualitative-message green-text" style="font-size: 14px; padding: 0px;">
+    <b style="font-size: 13px;">
+      QUALITATIVE - REASON SHOULD BE MENTIONED IN QUALITATIVE IF SCORE IS LESS THAN 7
+    </b><br>
+    (Otherwise it will not be considered)
+  </td>
+</tr>
+
+  </table>
+</div>
+</header>
+
+<body>
+    <style>body {
+    max-width: 85%; /* Reduce width to 80% of the screen */
+    margin: auto; /* Center the content */
+}
+</style>
+<tr>
+
+   <div class="responsive-table-wrapper">  
+  <table  class="table">
+    <thead>
+        <tr>
+            <th style="width: 1%; text-align: center; border: 1px solid black;" class="blue-text">SL No</th>
+            <th style="width: 10%; border: 1px solid black;" class="blue-text">Description</th>
+            <th style="width: 5%; border: 1px solid black;"></th>
+            <th colspan="4" style="border: 1px solid black;" class="blue-text">Feedback</th>
+
+        </tr>
+        <tr>
+            <th colspan="3" style="border: 1px solid black;"></th>
+            <th style="text-align: center; width: 5%; border: 1px solid black;" class="blue-text">Average</th>
+            <th style="text-align: center; width: 5%; border: 1px solid black;" class="blue-text">Good</th>
+            <th style="text-align: center; width: 5%; border: 1px solid black;" class="blue-text">Very Good</th>
+        </tr>
+    </thead>
+    <tbody>
+       <!-- Modal (Pop-up Canvas) -->
+<div id="feedbackModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h3>Submit Your Feedback</h3>
+    <textarea id="feedbackInput"></textarea>
+    <button id="saveFeedback">💾 Save Feedback</button>
+  </div>
+</div>
+
+<!-- Row 1 -->
+<tr class="feedback-row">
+  <td rowspan="2" style="text-align: center; border: 1px solid black;">1</td>
+  <td rowspan="2" style="border: 1px solid black;">RESPONCE TIME OF BREAKDOWN / DEVELOPMENT / ACCURACY</td>
+  <td style="border: 1px solid black;">Quantitative<span class="mandatory">*</span></td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row1"  class="quantitative-score" value="1">1 </label>
+    <label><input type="radio" name="row1"  class="quantitative-score" value="2">2 </label>
+    <label><input type="radio" name="row1"  class="quantitative-score" value="3">3 </label>
+    <label><input type="radio" name="row1"  class="quantitative-score" value="4">4 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row1"  class="quantitative-score" value="5">5 </label>
+    <label><input type="radio" name="row1"  class="quantitative-score" value="6">6 </label>
+    <label><input type="radio" name="row1"  class="quantitative-score" value="7">7 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row1"  class="quantitative-score" value="8">8 </label>
+    <label><input type="radio" name="row1"  class="quantitative-score" value="9">9 </label>
+    <label><input type="radio" name="row1"  class="quantitative-score" value="10">10 </label>
+  </td>
+</tr>
+
+<tr>
+  <td style="border: 1px solid black;">Qualitative</td>
+  <td colspan="3" style="border: 1px solid black;">
+    <div class="feedback-wrapper" style="position: relative;">
+      <input type="text" class="qualitative-feedback" name="feedback1" id="feedback1"
+             readonly placeholder="Your feedback appears here" style="width:97.5%;" >
+      <i class="edit-icon" data-target="feedback1" style="position: absolute; right: 10px; top: 5px; cursor: pointer;">✏️</i>
+    </div>
+  </td>
+</tr>
+
+    <!-- Row 2 -->
+  <tr class="feedback-row">
+  <td rowspan="2" style="text-align: center; border: 1px solid black;">2</td>
+  <td rowspan="2" class="description" style="border: 1px solid black;">
+    TOOLS USED TO RECTIFY THE PROBLEM / DEVELOPMENT / ACCURACY
+  </td>
+  <td style="border: 1px solid black;">Quantitative<span class="mandatory">*</span></td>
+  <td style="border: 1px solid black;">
+       <label><input type="radio" name="row2"  class="quantitative-score" value="1">1 </label>
+    <label><input type="radio" name="row2"  class="quantitative-score" value="2">2 </label>
+    <label><input type="radio" name="row2"  class="quantitative-score" value="3">3 </label>
+    <label><input type="radio" name="row2"  class="quantitative-score" value="4">4 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row2"  class="quantitative-score" value="5">5 </label>
+    <label><input type="radio" name="row2"  class="quantitative-score" value="6">6 </label>
+    <label><input type="radio" name="row2"  class="quantitative-score" value="7">7 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row2"  class="quantitative-score" value="8">8 </label>
+    <label><input type="radio" name="row2"  class="quantitative-score" value="9">9 </label>
+    <label><input type="radio" name="row2"  class="quantitative-score" value="10">10 </label>
+  </td>
+</tr>
+<tr> 
+  <td style="border: 1px solid black;">Qualitative</td>
+  <td colspan="3" style="border: 1px solid black;">
+    <div class="feedback-wrapper" style="position: relative;">
+      <input type="text" class="qualitative-feedback" name="feedback2" id="feedback2" 
+             readonly placeholder="Your feedback appears here" style="width:97.5%;" >     
+      <i class="edit-icon" data-target="feedback2" style="position: absolute; right: 10px; top: 5px; cursor: pointer;">✏️</i>
+    </div>
+  </td>
+</tr>
+
+   <!-- Row 3 -->
+<tr class="feedback-row">
+  <td rowspan="2" style="text-align: center; border: 1px solid black;">3</td>
+  <td rowspan="2" class="description" style="border: 1px solid black;">ATTITUDE TOWARDS ELIMINATING REPEATED PROBLEMS / DEVELOPMENT / ACCURACY</td>
+  <td style="border: 1px solid black;">Quantitative<span class="mandatory">*</span></td>
+  <td style="border: 1px solid black;">
+     <label><input type="radio" name="row3"  class="quantitative-score" value="1">1 </label>
+    <label><input type="radio" name="row3"  class="quantitative-score" value="2">2 </label>
+    <label><input type="radio" name="row3"  class="quantitative-score" value="3">3 </label>
+    <label><input type="radio" name="row3"  class="quantitative-score" value="4">4 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row3"  class="quantitative-score" value="5">5 </label>
+    <label><input type="radio" name="row3"  class="quantitative-score" value="6">6 </label>
+    <label><input type="radio" name="row3"  class="quantitative-score" value="7">7 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row3"  class="quantitative-score" value="8">8 </label>
+    <label><input type="radio" name="row3"  class="quantitative-score" value="9">9 </label>
+    <label><input type="radio" name="row3"  class="quantitative-score" value="10">10 </label>
+  </td>
+</tr>
+<tr class="feedback-row">
+  <td style="border: 1px solid black;">Qualitative</td>
+  <td colspan="3" style="border: 1px solid black;">
+    <div class="feedback-wrapper" style="position: relative;">
+      <input type="text" class="qualitative-feedback" name="feedback3" id="feedback3" 
+             readonly placeholder="Your feedback appears here" style="width:97.5%;" >
+      <i class="edit-icon" data-target="feedback3" style="position: absolute; right: 10px; top: 5px; cursor: pointer;">✏️</i>
+    </div>
+  </td>
+</tr>
+
+<!-- Row 4 -->
+<tr class="feedback-row">
+  <td rowspan="2" style="text-align: center; border: 1px solid black;">4</td>
+  <td rowspan="2" class="description" style="border: 1px solid black;">INVOLVEMENT OF MAINTEMAMCE PERSON IN THE BREAKDOWN / DEVELOPMENT / ACCURACY</td>
+  <td style="border: 1px solid black;">Quantitative<span class="mandatory">*</span></td>
+  <td style="border: 1px solid black;">
+      <label><input type="radio" name="row4"  class="quantitative-score" value="1">1 </label>
+    <label><input type="radio" name="row4"  class="quantitative-score" value="2">2 </label>
+    <label><input type="radio" name="row4"  class="quantitative-score" value="3">3 </label>
+    <label><input type="radio" name="row4"  class="quantitative-score" value="4">4 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row4"  class="quantitative-score" value="5">5 </label>
+    <label><input type="radio" name="row4"  class="quantitative-score" value="6">6 </label>
+    <label><input type="radio" name="row4"  class="quantitative-score" value="7">7 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row4"  class="quantitative-score" value="8">8 </label>
+    <label><input type="radio" name="row4"  class="quantitative-score" value="9">9 </label>
+    <label><input type="radio" name="row4"  class="quantitative-score" value="10">10 </label>
+</tr>
+<tr class="feedback-row">
+  <td style="border: 1px solid black;">Qualitative</td>
+  <td colspan="3" style="border: 1px solid black;">
+    <div class="feedback-wrapper" style="position: relative;">
+      <input type="text" class="qualitative-feedback" name="feedback4" id="feedback4" 
+            readonly placeholder="Your feedback appears here" style="width:97.5%;" >
+      <i class="edit-icon" data-target="feedback4" style="position: absolute; right: 10px; top: 5px; cursor: pointer;">✏️</i>
+    </div>
+  </td>
+</tr>
+
+<!-- Row 5 -->
+<tr class="feedback-row">
+  <td rowspan="2" style="text-align: center; border: 1px solid black;">5</td>
+  <td rowspan="2" class="description" style="border: 1px solid black;">SKILL LEVEL IN ATTENDING BREAKDOWN / DEVELOPMENT / ACCURACY</td>
+  <td style="border: 1px solid black;">Quantitative<span class="mandatory">*</span></td>
+  <td style="border: 1px solid black;">
+     <label><input type="radio" name="row5"  class="quantitative-score" value="1">1 </label>
+    <label><input type="radio" name="row5"  class="quantitative-score" value="2">2 </label>
+    <label><input type="radio" name="row5"  class="quantitative-score" value="3">3 </label>
+    <label><input type="radio" name="row5"  class="quantitative-score" value="4">4 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row5"  class="quantitative-score" value="5">5 </label>
+    <label><input type="radio" name="row5"  class="quantitative-score" value="6">6 </label>
+    <label><input type="radio" name="row5"  class="quantitative-score" value="7">7 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row5"  class="quantitative-score" value="8">8 </label>
+    <label><input type="radio" name="row5"  class="quantitative-score" value="9">9 </label>
+    <label><input type="radio" name="row5"  class="quantitative-score" value="10">10 </label>
+  </td>
+</tr>
+<tr class="feedback-row">
+  <td style="border: 1px solid black;">Qualitative</td>
+  <td colspan="3" style="border: 1px solid black;">
+    <div class="feedback-wrapper" style="position: relative;">
+      <input type="text" class="qualitative-feedback" name="feedback5" id="feedback5" 
+            readonly placeholder="Your feedback appears here" style="width:97.5%;">
+      <i class="edit-icon" data-target="feedback5" style="position: absolute; right: 10px; top: 5px; cursor: pointer;">✏️</i>
+    </div>
+  </td>
+</tr>
+
+<!-- Row 6 -->
+<tr class="feedback-row">
+  <td rowspan="2" style="text-align: center; border: 1px solid black;">6</td>
+  <td rowspan="2" class="description" style="border: 1px solid black;">SATISFACTION LEVEL OF SERVICE PROVIDED</td>
+  <td style="border: 1px solid black;">Quantitative<span class="mandatory">*</span></td>
+  <td style="border: 1px solid black;">
+      <label><input type="radio" name="row6"  class="quantitative-score" value="1">1 </label>
+    <label><input type="radio" name="row6"  class="quantitative-score" value="2">2 </label>
+    <label><input type="radio" name="row6"  class="quantitative-score" value="3">3 </label>
+    <label><input type="radio" name="row6"  class="quantitative-score" value="4">4 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row6"  class="quantitative-score" value="5">5 </label>
+    <label><input type="radio" name="row6"  class="quantitative-score" value="6">6 </label>
+    <label><input type="radio" name="row6"  class="quantitative-score" value="7">7 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row6"  class="quantitative-score" value="8">8 </label>
+    <label><input type="radio" name="row6"  class="quantitative-score" value="9">9 </label>
+    <label><input type="radio" name="row6"  class="quantitative-score" value="10">10 </label>
+  </td>
+</tr>
+<tr class="feedback-row">
+  <td style="border: 1px solid black;">Qualitative</td>
+  <td colspan="3" style="border: 1px solid black;">
+    <div class="feedback-wrapper" style="position: relative;">
+      <input type="text" class="qualitative-feedback" name="feedback6" id="feedback6" 
+            readonly placeholder="Your feedback appears here" style="width:97.5%;" >
+      <i class="edit-icon" data-target="feedback6" style="position: absolute; right: 10px; top: 5px; cursor: pointer;">✏️</i>
+    </div>
+  </td>
+</tr>
+
+<!-- Row 7 -->
+ <tr class="feedback-row">
+  <td rowspan="2" style="text-align: center; border: 1px solid black;">7</td>
+  <td rowspan="2" class="description" style="border: 1px solid black;">SATISFACTION LEVEL OF SERVICE PROVIDER</td>
+  <td style="border: 1px solid black;">Quantitative<span class="mandatory">*</span></td>
+  <td style="border: 1px solid black;">
+      <label><input type="radio" name="row7"  class="quantitative-score" value="1">1 </label>
+    <label><input type="radio" name="row7"  class="quantitative-score" value="2">2 </label>
+    <label><input type="radio" name="row7"  class="quantitative-score" value="3">3 </label>
+    <label><input type="radio" name="row7"  class="quantitative-score" value="4">4 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row7"  class="quantitative-score" value="5">5 </label>
+    <label><input type="radio" name="row7"  class="quantitative-score" value="6">6 </label>
+    <label><input type="radio" name="row7"  class="quantitative-score" value="7">7 </label>
+  </td>
+  <td style="border: 1px solid black;">
+    <label><input type="radio" name="row7"  class="quantitative-score" value="8">8 </label>
+    <label><input type="radio" name="row7"  class="quantitative-score" value="9">9 </label>
+    <label><input type="radio" name="row7"  class="quantitative-score" value="10">10 </label>
+  </td>
+</tr>
+<tr class="feedback-row">
+  <td style="border: 1px solid black;">Qualitative</td>
+  <td colspan="3" style="border: 1px solid black;">
+    <div class="feedback-wrapper" style="position: relative;">
+      <input type="text" class="qualitative-feedback" name="feedback7" id="feedback7" 
+             readonly placeholder="Your feedback appears here" style="width:97.5%;" >
+      <i class="edit-icon" data-target="feedback7" style="position: absolute; right: 10px; top: 5px; cursor: pointer;">✏️</i>
+    </div>
+  </td>
+</tr>
+
+<!-- Row 8 -->
+<tr>
+    <td rowspan="2" style="text-align: center; border: 1px solid black;">8</td>
+    <td rowspan="2" style="border: 1px solid black;">ANY IMPROVEMENT REQUIRED FOR INCREASING OUR SERVICE</td>
+     <td style="border: 1px solid black;">For what?</td>
+    <td colspan="4" style="border: 1px solid black;">
+        <input type="text" name="feedback8" placeholder="Enter suggestions" style="width: 98%;">
+    </td>
+</tr>
+
+</tbody>
+   </tbody>
+</table>
+</div>
+</table>
+
+<div class="additional-info">
+    <p><b>F-6163-ICSFBS-20 Rel-0 19.06.2017</b></p>
+    <p><b>NOTE: Content Modified for Breakdown / Civil services individually</b></p>
+</div>
+</div>
+</div>
+</div>
+<div style="text-align: center; margin-top: 20px;">
+  <button id="submitBtn" type="button">Submit Feedback</button>
+
+</div>
+<script>
+document.getElementById("submitBtn").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  let missingFields = [];
+
+  const fields = [
+    { id: "submitted_on", name: "Submitted On" },
+    { id: "returned_on", name: "Returned On" },
+    { id: "submitted_by", name: "Submitted By" },
+    { id: "concern_dept", name: "Concern Dept" },
+    { id: "concern_name", name: "Concern Name" },
+    { id: "signatureInput", name: "Signature" },
+    { id: "work_description", name: "Work Description"},
+  ];
+
+  fields.forEach(field => {
+    const value = document.getElementById(field.id)?.value.trim();
+    if (!value) {
+      missingFields.push(field.name);
+    }
+  });
+
+  for (let i = 1; i <= 7; i++) {
+    const selected = document.querySelector(`input[name="row${i}"]:checked`);
+    if (!selected) {
+      missingFields.push(`Quantitative feedback of row${i}`);
+    }
+  }
+
+  if (missingFields.length > 0) {
+    alert("⚠️ Please fill in all mandatory fields:\n" + missingFields.join("\n"));
+  } else {
+    alert("✅ All mandatory fields are filled. Generating PDF...");
+
+// Inside your existing click handler after validations
+   setTimeout(() => {
+  const element = document.getElementById("form-border");
+
+
+// Clean up fields before PDF
+document.querySelectorAll(".edit-icon").forEach(icon => {
+  icon.style.visibility = "hidden"; // hide pencil icons
+});
+
+document.querySelectorAll(".qualitative-feedback").forEach(input => {
+  if (!input.value.trim() || input.value.trim() === "Your feedback appears here") {
+    input.value = " "; // remove default placeholder
+  }
+});
+
+  const opt = {
+    margin: 0,
+    filename: 'ICSS Feedback_Form.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      scrollY: 0,
+      useCORS: true
+    },
+    jsPDF: {
+      unit: 'px',
+      format: [1400, 1450],
+      orientation: 'portrait'
+    }
+  };
+
+  html2pdf().set(opt).from(element).save().then(() => {
+  // Reset form inputs
+  document.querySelector("form")?.reset();
+  document.querySelectorAll("input[type='radio']").forEach(radio => { radio.checked = false; });
+  document.querySelectorAll("textarea").forEach(area => area.value = '');
+
+  // Clear signature input value and attribute
+  const signatureInput = document.getElementById("signatureInput");
+  const signaturePreview = document.getElementById("signaturePreview");
+  const canvas = document.getElementById("signatureCanvas");
+  const ctx = canvas.getContext("2d");
+
+  signatureInput.value = "";
+  signatureInput.removeAttribute("data-signature");
+
+  // Clear preview image
+  if (signaturePreview) {
+    signaturePreview.innerHTML = "";
+  }
+
+  // Clear canvas
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  // Optional: reset flag if used globally
+  window.hasDrawn = false;
+});
+}, 500);
+  }
+});
+</script>
+</div>
+</body>
+</html>
+</body>
